@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Task Master</title>
+<link rel="manifest" href="manifest.json">
+</head>
+<body>
+<h1>Task Master</h1>
+<input id="taskInput" placeholder="Nuova attività">
+<button onclick="addTask()">Aggiungi</button>
+<ul id="list"></ul>
+
+<script>
+let tasks = JSON.parse(localStorage.getItem('tasks')||'[]');
+
+function render(){
+  document.getElementById('list').innerHTML = tasks.map((t,i)=>
+    `<li>
+      <input type="checkbox" ${t.done?'checked':''} onchange="toggle(${i})">
+      ${t.text}
+      <button onclick="del(${i})">X</button>
+    </li>`
+  ).join('');
+}
+
+function addTask(){
+  const v=document.getElementById('taskInput').value;
+  if(!v) return;
+  tasks.push({text:v,done:false});
+  localStorage.setItem('tasks',JSON.stringify(tasks));
+  render();
+}
+
+function toggle(i){
+  tasks[i].done=!tasks[i].done;
+  localStorage.setItem('tasks',JSON.stringify(tasks));
+  render();
+}
+
+function del(i){
+  tasks.splice(i,1);
+  localStorage.setItem('tasks',JSON.stringify(tasks));
+  render();
+}
+
+render();
+</script>
+</body>
+</html>

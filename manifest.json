@@ -1,0 +1,8 @@
+{
+  "name": "Task Master",
+  "short_name": "TaskMaster",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff"
+}
